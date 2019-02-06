@@ -10,5 +10,5 @@ Here is the list of used technologies:
   - moxy to save state of view over configuration changes;
   - MVP pattern to separate ui from business logic;
   
-also I have added an adaptive icon and custom windowBackground for splash screen to provide pretty animation when user starts the application
+also I have added an adaptive icon and custom windowBackground for splash screen to provide cute animation when user starts the application
   
