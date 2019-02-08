@@ -1,43 +1,52 @@
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical">
-
-    <FrameLayout
+<layout xmlns:android="http://schemas.android.com/apk/res/android" >
+    <data>
+        <variable
+            name="movie"
+            type="org.themoviedb.catalog.model.Movie"/>
+    </data>
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="300dp">
+        android:layout_height="wrap_content"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/image"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:scaleType="centerCrop"/>
+            android:layout_height="300dp">
 
-        <TextView
-            android:id="@+id/title"
-            style="@style/TextAppearance.MaterialComponents.Headline4"
+            <ImageView
+                android:id="@+id/image"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/no_image"/>
+
+            <TextView
+                android:id="@+id/title"
+                style="@style/TextAppearance.MaterialComponents.Headline4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:layout_gravity="bottom"
+                android:background="@drawable/title_background"
+                android:padding="16dp"
+                android:text="@{movie.title}"
+                tools:text="Title" />
+        </FrameLayout>
+
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:layout_gravity="bottom"
-            android:background="@drawable/title_background"
-            android:padding="16dp"
-            tools:text="Title" />
-    </FrameLayout>
+            android:layout_height="match_parent">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+            <TextView
+                android:padding="16dp"
+                android:id="@+id/description"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@{movie.overview}"
+                tools:text="TextAppearance MaterialComponents Caption Caption TextAppearance MaterialComponents Caption" />
+        </ScrollView>
 
-        <TextView
-            android:padding="16dp"
-            android:id="@+id/description"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:text="TextAppearance MaterialComponents Caption Caption TextAppearance MaterialComponents Caption" />
-    </ScrollView>
-
-</LinearLayout>
+    </LinearLayout>
+</layout>

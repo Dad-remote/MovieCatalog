@@ -1,6 +1,7 @@
 package org.themoviedb.catalog.ui.details;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.github.ivbaranov.mfb.MaterialFavoriteButton;
 
 import org.themoviedb.catalog.R;
+import org.themoviedb.catalog.databinding.FragmentMovieDetailsBinding;
 import org.themoviedb.catalog.model.Favorite;
 import org.themoviedb.catalog.model.Movie;
 import org.themoviedb.catalog.support.MvpFragment;
@@ -21,6 +23,8 @@ import org.themoviedb.catalog.util.Logic;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
+import androidx.databinding.DataBindingUtil;
+import androidx.databinding.ViewDataBinding;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 
@@ -44,8 +48,7 @@ public class MovieDetailsFragment extends MvpFragment implements DetailsView {
         Logic.checkNotNull(getArguments());
 
         long movieId = getArguments().getLong(ID_ARG);
-        detailsPresenter.loadMovie(movieId);
-
+        detailsPresenter.setMovieId(movieId);
         toolbarFavorite = buildFavoriteButton();
         toolbarFavorite.setOnFavoriteChangeListener((buttonView, favorite) -> detailsPresenter.changeFavorite(movieId, favorite));
     }
@@ -53,12 +56,15 @@ public class MovieDetailsFragment extends MvpFragment implements DetailsView {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View layout = inflater.inflate(R.layout.fragment_movie_details, container, false);
+        ViewDataBinding viewDataBinding = FragmentMovieDetailsBinding.inflate(inflater, container, false);
+        View layout = viewDataBinding.getRoot();
+        //View layout = inflater.inflate(R.layout.fragment_movie_details, container, false);
         image = layout.findViewById(R.id.image);
         title = layout.findViewById(R.id.title);
         description = layout.findViewById(R.id.description);
         Logic.checkNotNull(getActivity());
         toolbar = ((MainActivity) getActivity()).getToolbar();
+
         return layout;
     }
 
@@ -69,6 +75,12 @@ public class MovieDetailsFragment extends MvpFragment implements DetailsView {
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         toolbar.removeView(toolbarFavorite);
@@ -76,11 +88,13 @@ public class MovieDetailsFragment extends MvpFragment implements DetailsView {
 
     @Override
     public void showMovieDetails(LiveData<Movie> movieData) {
+        Log.d("Dad", "showMovieDetails");
         movieData.observe(this, new MovieDataObserver());
     }
 
     @Override
     public void showFavorite(LiveData<Favorite> favorite) {
+        Log.d("Dad", "showFavorite");
         favorite.observe(this, new FavoriteDataObserver());
     }
 

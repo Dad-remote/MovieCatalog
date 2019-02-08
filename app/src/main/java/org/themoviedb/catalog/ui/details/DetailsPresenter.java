@@ -14,6 +14,18 @@ import androidx.lifecycle.LiveData;
 @InjectViewState
 public class DetailsPresenter extends MvpPresenter<DetailsView> {
 
+    long movieId;
+
+    public void setMovieId(long movieId) {
+        this.movieId = movieId;
+    }
+
+    @Override
+    protected void onFirstViewAttach() {
+        super.onFirstViewAttach();
+        loadMovie(movieId);
+    }
+
     public void loadMovie(long movieId) {
         MovieRepository repository = RepositoryFactory.getInstance().getMovieRepository();
         LiveData<Movie> movie = repository.getById(movieId);
