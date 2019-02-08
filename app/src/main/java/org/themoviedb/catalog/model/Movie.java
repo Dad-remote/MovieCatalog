@@ -44,7 +44,7 @@ public class Movie {
     }
 
     public String getPosterPath() {
-        return posterPath.startsWith("http") ? posterPath : "https://image.tmdb.org/t/p/w342" + posterPath;
+        return posterPath == null || posterPath.startsWith("http") ? posterPath : "https://image.tmdb.org/t/p/w342" + posterPath;
     }
 
     public void setPosterPath(String posterPath) {

@@ -1,5 +1,6 @@
 package org.themoviedb.catalog.ui.movies;
 
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,7 +42,11 @@ public class MoviesAdapter extends PagedListAdapter<Movie, MoviesAdapter.MovieVi
         Logic.checkNotNull(item);
         holder.title.setText(item.getTitle());
         holder.description.setText(item.getOverview());
-        ImageHelper.showImage(holder.image, item.getPosterPath());
+        if (!TextUtils.isEmpty(item.getPosterPath())) {
+            ImageHelper.showImage(holder.image, item.getPosterPath());
+        } else {
+            holder.image.setImageResource(R.drawable.no_image);
+        }
         holder.layout.setOnClickListener((v) -> clickListener.onItemClick(item));
     }
 
